@@ -112,6 +112,18 @@ public class WeatherFragment extends Fragment {
     @Bind(R.id.tv_sun_set)
     TextView textView_sun_set;
 
+    @Bind(R.id.tv_air_hum)
+    TextView textView_air_hum;
+
+    @Bind(R.id.tv_rain_count)
+    TextView textView_rain_count;
+
+    @Bind(R.id.tv_feel_temp)
+    TextView textView_feel_temp;
+
+    @Bind(R.id.tv_air_pres)
+    TextView textView_air_pres;
+
     @Bind(R.id.nothing)
     TextView text_noting_show;
     //当前天气
@@ -240,7 +252,7 @@ public class WeatherFragment extends Fragment {
 //            });
             initAirQuality();
             initLifeIndex();
-            initWind();
+            initNow();
         }
     }
 
@@ -271,10 +283,14 @@ public class WeatherFragment extends Fragment {
             textView_uv.setText(suggestion.getUv().getBrf());
         }
     }
-    public void initWind(){
+    public void initNow(){
         if (weatherInfo != null) {
             textView_wind_desc.setText(now.getWind().getDir());
             textView_wind_speed.setText(now.getWind().getSpd());
+            textView_air_hum.setText(now.getHum()+"%");
+            textView_feel_temp.setText(now.getFl()+"°");
+            textView_rain_count.setText(now.getPcpn());
+            textView_air_pres.setText(now.getPres()+"pa");
         }
     }
 
@@ -284,6 +300,7 @@ public class WeatherFragment extends Fragment {
             textView_sun_set.setText(daily_forecasts_data.get(0).getAstro().getSunset());
         }
     }
+
 
     private void initRefreshLayout() {
         //设置刷新圈的颜色
