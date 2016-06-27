@@ -3,6 +3,7 @@ package com.wuhaiwen.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.util.DateUtil;
+import com.util.ImageUtil;
+import com.util.ToastUtl;
 import com.wuhaiwen.adapter.DailyAdapter;
 import com.wuhaiwen.adapter.HourAdapter;
 import com.wuhaiwen.bean.AirQuality;
@@ -30,6 +34,8 @@ import com.wuhaiwen.net.GetWeatherInfo;
 import com.wuhaiwen.weather.R;
 import com.wuhaiwen.view.HorizontalListView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -139,6 +145,8 @@ public class WeatherFragment extends Fragment {
     //生活指数
     Suggestion suggestion;
     //风向风速
+    @Bind(R.id.image_now_cond)
+    ImageView imageView;
 
 
     /**
@@ -162,6 +170,11 @@ public class WeatherFragment extends Fragment {
     //
     HourAdapter hourAdapter;
 
+    //上次更新时间
+    String dateString;
+
+    //回掉接口
+    WeatherCallback weatherCallback;
     public WeatherFragment() {
         // Required empty public constructor
     }
@@ -171,6 +184,10 @@ public class WeatherFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = getActivity();
+        //给callback赋值
+        if(context instanceof WeatherCallback){
+            weatherCallback = (WeatherCallback) context;
+        }
     }
 
 
@@ -181,16 +198,36 @@ public class WeatherFragment extends Fragment {
         ButterKnife.bind(this, v);
         initRefreshLayout();
         new getInfoTask().execute();
+//        imageView.setImageResource(R.drawable.fengche);
         //天气状况
         return v;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        //释放callback
+        weatherCallback = null;
+    }
+
+    /**
+     * weather的回调接口，用来向主活动传递城市名和天气状况，用来改变天气背景
+     */
+    public interface WeatherCallback{
+        public void Send_CityName(String city_name,String cond);
+    }
 
     public void initWeatherInfo() {
         if (weatherInfo != null) {
             //得到当前天气
             now = weatherInfo.getAllInfos().get(0).getNow();
+            //设置天气背景图片
+//            refreshLayout.setBackgroundResource(ImageUtil.Change_Bg_ImageId(now.getCond().getCond_day()));
+//            MediaPlayer mp = MediaPlayer.create(context, R.raw.video_cold);
+//            mp.start();
+            imageView.setImageResource(ImageUtil.Change_Cond_ImageId(now.getCond().getCond_day()));
             basicInfo = weatherInfo.getAllInfos().get(0).getBasic();
+
             airQuality = weatherInfo.getAllInfos().get(0).getAqi();
             //得到未来几天的天气
             daily_forecasts_data = weatherInfo.getAllInfos().get(0).getDaily_forecasts();
@@ -202,7 +239,7 @@ public class WeatherFragment extends Fragment {
             String local_time = basicInfo.getUpdate().getLoc();
 //            Log.d("hello", local_time + "g");
             textView_now_week.setText(DateUtil.getWeek(local_time.substring(0, local_time.indexOf(" "))) + " "
-                    + local_time.substring(local_time.indexOf(" ")) + "更新");
+                    + local_time.substring(local_time.indexOf(" ")) + "发布");
             //天气状况
             textView_now_cond.setText(now.getCond().getCond_day() + " ");
             //空气质量
@@ -220,11 +257,11 @@ public class WeatherFragment extends Fragment {
                 }
             });
             //
-            if(hourly_forecasts_data.size()>0) {
+            if (hourly_forecasts_data.size() > 0) {
                 text_noting_show.setVisibility(View.INVISIBLE);
-                hourAdapter = new HourAdapter(context, hourly_forecasts_data, now.getCond().getCond_day());
+                hourAdapter = new HourAdapter(context, hourly_forecasts_data, now.getCond().getCond_day(),now);
                 horizontalListView_hour.setAdapter(hourAdapter);
-            }else {
+            } else {
                 //未来几小时天气如果不存在则显示
                 text_noting_show.setVisibility(View.VISIBLE);
             }
@@ -250,6 +287,7 @@ public class WeatherFragment extends Fragment {
 //                    refreshLayout.setEnabled(enable);
 //                }
 //            });
+            //s
             initAirQuality();
             initLifeIndex();
             initNow();
@@ -283,18 +321,20 @@ public class WeatherFragment extends Fragment {
             textView_uv.setText(suggestion.getUv().getBrf());
         }
     }
-    public void initNow(){
+
+    public void initNow() {
         if (weatherInfo != null) {
             textView_wind_desc.setText(now.getWind().getDir());
-            textView_wind_speed.setText(now.getWind().getSpd());
-            textView_air_hum.setText(now.getHum()+"%");
-            textView_feel_temp.setText(now.getFl()+"°");
-            textView_rain_count.setText(now.getPcpn());
-            textView_air_pres.setText(now.getPres()+"pa");
+            textView_wind_speed.setText(now.getWind().getSc() + "级");
+            textView_air_hum.setText(now.getHum() + "%");
+            textView_feel_temp.setText(now.getFl() + "℃");
+            textView_rain_count.setText(now.getPcpn() + "mm");
+            String press = now.getPres();
+            textView_air_pres.setText(press.substring(0, press.length() - 1) + "." + press.substring(press.length() - 1) + "KPa");
         }
     }
 
-    public void initSun(){
+    public void initSun() {
         if (weatherInfo != null) {
             textView_sun_rise.setText(daily_forecasts_data.get(0).getAstro().getSunrise());
             textView_sun_set.setText(daily_forecasts_data.get(0).getAstro().getSunset());
@@ -329,21 +369,35 @@ public class WeatherFragment extends Fragment {
         });
     }
 
+    boolean isNetData;
 
-    private class getInfoTask extends AsyncTask<Void, Void, WeatherInfo> {
+    private class getInfoTask extends AsyncTask<Void, Boolean, WeatherInfo> {
 
         @Override
         protected WeatherInfo doInBackground(Void... params) {
             weatherInfo = GetWeatherInfo.getWeatherInfo("changsha", context);
+            isNetData = GetWeatherInfo.DataFromNet();
             return weatherInfo;
         }
 
         @Override
         protected void onPostExecute(WeatherInfo weatherInfo) {
             super.onPostExecute(weatherInfo);
-            initWeatherInfo();
-            Toast.makeText(getActivity(), "执行", Toast.LENGTH_SHORT).show();
+            if (isNetData && weatherInfo != null) {
+                long time = System.currentTimeMillis();
+                Date date = new Date(time);
+                SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("HH:mm");
+                 dateString = simpleDateFormat1.format(date);
+                ToastUtl.ShowToast(dateString,context);
+                initWeatherInfo();
+                weatherCallback.Send_CityName(basicInfo.getCity(),now.getCond().getCond_day());
+                //Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_SHORT).show();
+            }else if(!isNetData){
+                initWeatherInfo();
+                Toast.makeText(getActivity(), "请检查网络", Toast.LENGTH_SHORT).show();
+            }
         }
+
     }
 
 }

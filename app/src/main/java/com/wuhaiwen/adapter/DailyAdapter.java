@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.util.DateUtil;
+import com.util.ImageUtil;
 import com.wuhaiwen.bean.Daily_forecast;
 import com.wuhaiwen.weather.R;
 
@@ -85,6 +86,7 @@ public class DailyAdapter extends BaseAdapter {
 
         //将数据绑定到控件上
         public void BindData(Daily_forecast daily_forecast) {
+            imageView_cond.setImageResource(ImageUtil.Change_Cond_ImageId(daily_forecast.getCond().getCond_day()));
             textView_cond.setText(daily_forecast.getCond().getCond_day());
             textView_temp.setText(daily_forecast.getTmp().getMin() + "°" + "/" + daily_forecast.getTmp().getMax() + "°");
             String local_date = daily_forecast.getDate();

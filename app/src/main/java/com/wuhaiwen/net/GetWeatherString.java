@@ -31,6 +31,7 @@ public class GetWeatherString {
             //读取超时
             connection.setReadTimeout(5000);
             int code = connection.getResponseCode();
+//            Log.d("StringText", code + "hah");
             //响应成功
             if (code == HttpsURLConnection.HTTP_OK) {
                 in = connection.getInputStream();
@@ -41,7 +42,7 @@ public class GetWeatherString {
                     stringBuffer.append(buf, 0, size);
                 }
                 String text = stringBuffer.toString();
-//                Log.d("text", text + "hah");
+
                 //将数据以覆盖的方式写入到内部存储，在没有网络的情况下读取上次的天气信息
                 OutputStream out = context.openFileOutput("weather", Context.MODE_PRIVATE);
                 Writer writer = new OutputStreamWriter(out, "utf-8");
@@ -51,6 +52,7 @@ public class GetWeatherString {
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
+//            Log.d("StringText", "响应超时" + "hah");
         } catch (IOException e) {
             e.printStackTrace();
         }

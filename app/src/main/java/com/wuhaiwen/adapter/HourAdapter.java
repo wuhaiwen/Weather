@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.util.ImageUtil;
 import com.wuhaiwen.bean.Hourly_forecast;
+import com.wuhaiwen.bean.Now;
 import com.wuhaiwen.weather.R;
 
 import java.util.List;
@@ -25,11 +27,13 @@ public class HourAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     String cond;
+    Now now;
 
-    public HourAdapter(Context context, List<Hourly_forecast> data,String cond) {
+    public HourAdapter(Context context, List<Hourly_forecast> data, String cond, Now now) {
         this.context = context;
         this.data = data;
         this.cond = cond;
+        this.now = now;
         inflater = LayoutInflater.from(context);
     }
 
@@ -84,6 +88,7 @@ public class HourAdapter extends BaseAdapter {
         }
 
         public void BindData(Hourly_forecast hourly_forecast) {
+            imageView_cond.setImageResource(ImageUtil.Change_Cond_ImageId(now.getCond().getCond_day()));
             textView_cond.setText(cond);
             textView_temp.setText(hourly_forecast.getTmp()+"°");
             textView_hour.setText(hourly_forecast.getDate().substring(hourly_forecast.getDate().indexOf(" ")));

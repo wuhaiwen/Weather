@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_marginLeft="16dp"
@@ -24,6 +25,7 @@
             android:layout_height="150dp">
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_air_index"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,6 +36,7 @@
                 android:textSize="30sp" />
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_air_qlty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,6 +55,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_marginLeft="16dp"
@@ -66,12 +70,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:text="PM10" />
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_pm10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +91,7 @@
             android:layout_height="0.1dp"
             android:layout_gravity="left"
             android:layout_marginTop="5dp"
-            android:background="@color/white" />
+            android:background="@color/list_line_color" />
 
         <LinearLayout
             android:layout_width="150dp"
@@ -94,12 +100,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:text="PM2.5" />
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_pm2.5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,7 +121,7 @@
             android:layout_height="0.1dp"
             android:layout_gravity="left"
             android:layout_marginTop="5dp"
-            android:background="@color/white" />
+            android:background="@color/list_line_color" />
 
         <LinearLayout
             android:layout_width="150dp"
@@ -122,12 +130,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:text="NO2" />
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_NO2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -141,7 +151,7 @@
             android:layout_height="0.1dp"
             android:layout_gravity="left"
             android:layout_marginTop="5dp"
-            android:background="@color/white" />
+            android:background="@color/list_line_color" />
 
         <LinearLayout
             android:layout_width="150dp"
@@ -150,12 +160,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:text="SO2" />
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_SO2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -169,7 +181,7 @@
             android:layout_height="0.1dp"
             android:layout_gravity="left"
             android:layout_marginTop="5dp"
-            android:background="@color/white" />
+            android:background="@color/list_line_color" />
 
         <LinearLayout
             android:layout_width="150dp"
@@ -178,12 +190,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:text="O3" />
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_O3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -197,7 +211,7 @@
             android:layout_height="0.1dp"
             android:layout_gravity="left"
             android:layout_marginTop="5dp"
-            android:background="@color/white" />
+            android:background="@color/list_line_color" />
 
         <LinearLayout
             android:layout_width="150dp"
@@ -206,12 +220,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:text="CO" />
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_CO"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

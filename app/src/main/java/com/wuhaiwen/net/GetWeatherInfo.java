@@ -19,19 +19,22 @@ import java.io.UnsupportedEncodingException;
  */
 public class GetWeatherInfo {
 
+    static boolean isNetData ;
     public static WeatherInfo getWeatherInfo(String city,Context context) {
         WeatherInfo weatherInfo = null;
         InputStream in;
         StringBuffer buffer = null;
-        String text1 = null;
         try {
             buffer = GetWeatherString.getRequest(UrlConfig.getHttpUrl(city), context);
+            Log.d("cityurl",UrlConfig.getHttpUrl(city));
+//            Log.d("city",buffer.toString());
             //判断是否从网络取到数据
             if (buffer.toString().length() != 0) {
                 in = new ByteArrayInputStream(buffer.toString().getBytes());
                 Reader reader = new InputStreamReader(in, "utf-8");
                 weatherInfo = new Gson().fromJson(reader, WeatherInfo.class);
                 in.close();
+                isNetData =true;
 //                text1 = weatherInfo.getAllInfos().get(0).getDaily_forecasts().toString();
             } else {
                 //如果没取到，则从之前存的历史数据中读取天气信息
@@ -40,10 +43,10 @@ public class GetWeatherInfo {
                 //int size = in.available();
                 Reader reader = new InputStreamReader(in, "utf-8");
                 weatherInfo = new Gson().fromJson(reader, WeatherInfo.class);
+                isNetData = false;
 //                text1 = weatherInfo.getAllInfos().get(0).getBasic().toString();
                 reader.close();
             }
-//                            Log.d("gaga",info.getAllInfos().toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -53,6 +56,12 @@ public class GetWeatherInfo {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.d("cityString",weatherInfo.toString());
         return weatherInfo;
+    }
+
+    public static boolean DataFromNet(){
+//        Log.d("is",String.valueOf(isNetData));
+        return isNetData;
     }
 }

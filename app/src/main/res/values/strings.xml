@@ -8,4 +8,19 @@
     <string name="updated_at">上次更新于%1$s前</string>
     <string name="updated_just_now">刚刚更新</string>
     <string name="time_error">时间有问题</string>
+    <string name="more_action_string">更多</string>
+
+    <string-array name="update_rate">
+        <item>一小时</item>
+        <item>两小时</item>
+        <item>三小时</item>
+        <item>四小时</item>
+    </string-array>
+
+    <string-array name="update_rate_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 </resources>

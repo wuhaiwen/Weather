@@ -1,18 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relative_layout_main"
+    android:id="@+id/FrameLayout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dualclock_widget_bg_cloudy_day"
     tools:context="com.wuhaiwen.activity.MainActivity">
+
+
+    <!--<android.support.v4.view.ViewPager-->
+    <!--android:id="@+id/viewPager"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_alignParentTop="true" />-->
+    <!--<android.support.design.widget.AppBarLayout-->
+    <!--android:id="@+id/view2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/list_line_color"-->
+    <!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:navigationIcon="@drawable/ic_settings_black_24dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_city_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/iv_location"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="112dp"
+                android:text=""
+                android:textColor="@color/simpleui_widget_normal_textColor"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/iv_location"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/tv_city_name"
+                android:background="@drawable/ic_city_gps"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <!--</android.support.design.widget.AppBarLayout>-->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginTop="60dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-
-</RelativeLayout>
+</FrameLayout>
