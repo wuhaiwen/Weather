@@ -25,8 +25,7 @@ public class GetWeatherInfo {
         InputStream in;
         StringBuffer buffer = null;
         try {
-            buffer = GetWeatherString.getRequest(UrlConfig.getHttpUrl(city), context);
-            Log.d("cityurl",UrlConfig.getHttpUrl(city));
+            buffer = GetWeatherString.getRequest(UrlConfig.getHttpUrl(city), context,city);
 //            Log.d("city",buffer.toString());
             //判断是否从网络取到数据
             if (buffer.toString().length() != 0) {
@@ -39,7 +38,8 @@ public class GetWeatherInfo {
             } else {
                 //如果没取到，则从之前存的历史数据中读取天气信息
 //                Log.d("gaga", "zhixing");
-                in = context.openFileInput("weather");
+                in = context.openFileInput("weather"+city);
+                Log.d("gaga", "weather"+city);
                 //int size = in.available();
                 Reader reader = new InputStreamReader(in, "utf-8");
                 weatherInfo = new Gson().fromJson(reader, WeatherInfo.class);
@@ -56,7 +56,6 @@ public class GetWeatherInfo {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("cityString",weatherInfo.toString());
         return weatherInfo;
     }
 

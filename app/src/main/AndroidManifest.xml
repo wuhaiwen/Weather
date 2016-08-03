@@ -3,7 +3,6 @@
     package="com.wuhaiwen.weather">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,5 +23,6 @@
             android:name="com.wuhaiwen.activity.SettingAcitivity"
             android:theme="@style/AppTheme"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 </manifest>

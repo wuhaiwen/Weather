@@ -359,4 +359,14 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
             return viewRect.contains((int) e.getRawX(), (int) e.getRawY());
         }
     };
+
+    /**
+     * 避免与ViewPager（父容器）的手势冲突
+     * @param ev
+     * @return
+     */
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        getParent().requestDisallowInterceptTouchEvent(true);
+//        return mGesture.onTouchEvent(ev);
+//    }
 }

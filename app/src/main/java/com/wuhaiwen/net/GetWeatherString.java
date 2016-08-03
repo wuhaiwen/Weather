@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,7 +20,7 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by wuhaiwen on 2016/6/13.
  */
 public class GetWeatherString {
-    public static StringBuffer getRequest(String httpUrl, Context context) {
+    public static StringBuffer getRequest(String httpUrl, Context context,String city_name) {
         StringBuffer stringBuffer = new StringBuffer();
         BufferedReader reader;
         InputStream in = null;
@@ -44,7 +45,8 @@ public class GetWeatherString {
                 String text = stringBuffer.toString();
 
                 //将数据以覆盖的方式写入到内部存储，在没有网络的情况下读取上次的天气信息
-                OutputStream out = context.openFileOutput("weather", Context.MODE_PRIVATE);
+                OutputStream out = context.openFileOutput("weather"+city_name, Context.MODE_PRIVATE);
+              //  File file = new File(getFi)
                 Writer writer = new OutputStreamWriter(out, "utf-8");
                 writer.write(text);
                 writer.close();

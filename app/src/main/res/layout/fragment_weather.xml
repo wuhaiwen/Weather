@@ -40,7 +40,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="16dp"
                     android:gravity="center_vertical"
-                    android:text="未来几小时天气"
+                    android:text="最近几小时天气"
                     android:textColor="@color/white" />
                 <View
                     android:layout_width="320dp"
@@ -52,8 +52,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <com.wuhaiwen.view.HorizontalListView
-                        android:id="@+id/horizontal_ListView_hour"
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView_hourly"
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
                         android:layout_marginTop="10dp" />
@@ -76,8 +76,8 @@
                     android:layout_gravity="center"
                     android:background="@color/list_line_color" />
 
-                <com.wuhaiwen.view.HorizontalListView
-                    android:id="@+id/horizontal_ListView_daily"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView_daily"
                     android:layout_width="match_parent"
                     android:layout_height="110dp"
                     android:layout_marginTop="10dp" />
